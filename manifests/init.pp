@@ -40,14 +40,13 @@
 class sudo (
   $sudoers         = {},
   $manage_sudoersd = false,
-  $sudoers_file    = ''
+  $sudoers_file    = '',
+  $package_ensure  = 'latest'
 ) {
 
   create_resources('sudo::sudoers', $sudoers)
 
-  package { 'sudo':
-    ensure  => latest
-  }
+  ensure_packages(['sudo'], {'ensure' => $package_ensure})
 
   file { '/etc/sudoers.d/':
     ensure  => directory,
